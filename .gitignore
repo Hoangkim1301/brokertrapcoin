@@ -1,0 +1,18 @@
+# Ignore files with .log extension
+*.log
+
+# Ignore directory named 'temp'
+/temp/
+
+# Ignore a specific file
+config.ini
+
+# Ignore all .txt files in the root directory
+/*.txt
+
+# Ignore all .pdf files recursively in all directories
+*.pdf
+
+#ignore settings.json
+.vscode/settings.json
+
