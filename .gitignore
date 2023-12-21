@@ -16,3 +16,6 @@ config.ini
 #ignore settings.json
 .vscode/settings.json
 
+# Ignore virtual environment
+env/
+
