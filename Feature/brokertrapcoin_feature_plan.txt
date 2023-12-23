@@ -1,5 +1,6 @@
 Trading bot Feature (Planed)
 
+- Having a GUI for stock management
 - Run the Bot without paying any money
 - Run a Simulation of your own buy and sell strategy
 - Strategy optimization by ML
@@ -8,7 +9,7 @@ Trading bot Feature (Planed)
 	+ Phase 1 with 50 Stocks available
 	+ Phase 2 with 100 Stocks
 	+ Phase 2(PlanB) Phase 1 with 20 Coins
-- WebUI: localhost (Phase 1)
+- Web: localhost (Phase 1)
 - Send message, command through via Telegram/Discord?
 - Display profit/loss 
 - Performance(%)

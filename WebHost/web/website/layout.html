@@ -1,0 +1,81 @@
+<!-- Stock Trading Website-->
+
+<!-- Layout for the Website-->
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags. -->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <!-- Documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/. -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <!-- CSS. -->
+        <link href="/webHost/web/styles.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+        <title> C$50 Finance: {% block title %}{% endblock %}</title>
+        
+         <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+         <link href="/static/favicon.ico" rel="icon">
+    </head>
+
+    <body>
+        <!-- navigation contains all navbar elements. -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light border">
+            <a class="navbar-brand" href="/"><span class="blue">Broker</span><span class="red">Trap</span><span class="yellow">Coin</span> <span class="gray">Finance</span></a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <!-- The user is logged in. -->
+                {% if session.user_id %}
+                    <ul class="navbar-nav mr-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                    </ul>
+                <!-- The user is logged out, or not yet login, being in login page -->
+                {% else %}
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">Log In</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- flash message -->
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary border text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+         <!-- Main content of each page -->
+         <main class="container p-5">
+            {% block main %}{% endblock %}
+        </main>
+
+        <!-- Footer. -->
+        <footer class="container">
+            <div id="top" class="text-center">
+                <div id="top">
+                    <a href="/"><img alt="Stock Trader" src="/picture/DB.jpg" style="width: 30px; height: auto;"/></a>
+                    Brought to you by <a href="https://www.facebook.com/profile.php?id=100071743173754">BunCaKoi</a>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+    
+</html>
