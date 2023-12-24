@@ -1,0 +1,31 @@
+<!-- Stock Trading Website -->
+
+<!-- Login page for registered users. -->
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <form action="/login" method="post">
+        <div style="display: flex; justify-content: center;">
+            <img src="/webFlask/picture/Ducbunluaga.jpg" alt="Duc Bun Lua Ga" style="width: 500px; height: auto;">
+        </div>
+
+        <!-- Empty space -->
+        <div style="height: 50px;"></div>
+        
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+    <p>Don't have an account? <a href="/register">Register</a></p>
+    
+{% endblock %}
+    

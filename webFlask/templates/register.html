@@ -1,23 +1,24 @@
-<!-- stock trading website -->
+<!-- Stock Trading Website -->
 
-<!--login page for cridentials-->
+<!-- User registration page. -->
 
 {% extends "layout.html" %}
 
 {% block title %}
-Login
+    Log In
 {% endblock %}
 
-{% block content %}
-    <h2>Login</h2>
-    <form action="/login" method="post">
+{% block main %}
+    <form action="/register" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
         </div>
         <div class="form-group">
             <input class="form-control" name="password" placeholder="Password" type="password">
         </div>
-        <button class="btn btn-primary" type="submit">Log in</button>
+        <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="Confirmation" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
     </form>
-    <p>Don't have an account? <a href="register.html">Register here</a></p>
 {% endblock %}

@@ -1,14 +1,14 @@
 import yfinance as yf
 import matplotlib.pyplot as plt
 import streamlit as st
-from datetime import datetime
 from stock_list import StockList
+from datetime import datetime, timedelta
 
 def real_time_price(stock_code):
     # Calculate the start date as one month ago from today
-    start_date = datetime.datetime.now() - datetime.timedelta(days=93)
+    start_date = datetime.now() - timedelta(days=93)
     start_date = start_date.strftime('%Y-%m-%d')
-    end_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+    end_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
     print('end_date:', end_date)
     # Download the data for the specified period
