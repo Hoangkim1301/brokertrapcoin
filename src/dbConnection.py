@@ -29,7 +29,7 @@ def create_table(conn, create_table_sql):
         print(e)
 
 #put to database table
-def insert(conn, query, data):
+def add(conn, query, data):
     """insert a row of data into the table
     :param conn: connection object
     :param query: an INSERT statement
@@ -42,26 +42,71 @@ def insert(conn, query, data):
     except sqlite3.Error as e:
         print(e)
 
-#main
-if __name__ == '__main__':
-    conn = create_connection(r"finance.db")
+def showDB(conn):
+    res = conn.execute("SELECT * FROM USERS")  
+    for row in res:  
+        print(row)   
+    conn.commit()           
+    conn.close()
     
+def clearDB(conn):
+    conn.execute("DELETE FROM USERS")
+    conn.commit()
+    print('Show database after clear:')
+    showDB(conn)
+    conn.close()
+    
+def testConnecDB():
+    conn = create_connection(r"finance.db")
     query = r"""CREATE TABLE IF NOT EXISTS users (
                             id integer PRIMARY KEY,
                             username text NOT NULL,
                             password text NOT NULL
-                            );"""
-                            
+                            );"""                   
     if conn is not None:
         create_table(conn, query)
-        
-    #if conn is not None:
-        #insert(conn, "INSERT INTO users (id, username, password) VALUES (?, ?, ?)", ("3","tommy", "admin"))
-       
-    res = conn.execute("SELECT * FROM USERS")  
     
+    res = conn.execute("SELECT * FROM USERS")  
     for row in res:  
         print(row)   
-       
     conn.commit()           
     conn.close()
+    
+def importDB(conn):
+    query = r"""CREATE TABLE IF NOT EXISTS users (
+                            id integer PRIMARY KEY,
+                            username text NOT NULL,
+                            password text NOT NULL
+                            );"""                   
+    if conn is not None:
+        create_table(conn, query)
+    
+    query = r'''INSERT INTO users (id, username, password)
+                VALUES 
+                ('1','kimlonghoang','12345'),
+                ('2','hoanganhnguyen','12345'),
+                ('3','minhducpham','12345'),
+                ('4','phuongthaonguyen','12345');'''
+    res = conn.execute("SELECT * FROM USERS")  
+    for row in res:  
+        print(row)   
+    conn.commit()           
+    conn.close()
+    
+#main
+if __name__ == '__main__':
+    
+    conn = create_connection(r"finance.db")
+    res = conn.execute("SELECT * FROM USERS WHERE username = 'a'")  
+    #print out the result
+    for row in res:
+        print('user', len(row)) 
+        
+    print('check')    
+    conn.commit()           
+    conn.close()
+    
+    
+    
+    
+    

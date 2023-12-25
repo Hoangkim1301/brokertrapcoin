@@ -69,3 +69,28 @@ Django is a high-level Python web framework that enables rapid development of se
 4. Plsease skip this step if you are not project manager!!!
 
 Remember to add Django to your `requirements.txt` file to ensure that it gets installed when setting up the project. You can do this by running `pip freeze > requirements.txt`, which will update your `requirements.txt` file with all the Python packages installed in your virtual environment, including their versions.
+
+### Installing Flask (inside of venv)
+
+Flask is a lightweight web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. To install Flask in your virtual environment, follow these steps:
+
+1. Ensure that your virtual environment is activated. If it's not, you can activate it using the instructions provided in the "Setting Up the Virtual Environment" section.
+
+2. Once the virtual environment is activated, you can install Flask using `pip`, the Python package installer. Run the following command:
+
+    ```bash
+    pip install flask
+    ```
+
+3. Verify that Flask was installed correctly by running the following Python command:
+
+    ```python
+    import flask
+    print(flask.__version__)
+    ```
+
+    This should display the version of Flask that was installed.
+
+4. Plsease skip this step if you are not project manager!!!
+
+Remember to add Flask to your `requirements.txt` file to ensure that it gets installed when setting up the project. You can do this by running `pip freeze > requirements.txt`, which will update your `requirements.txt` file with all the Python packages installed in your virtual environment, including their versions.

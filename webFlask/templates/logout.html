@@ -1,0 +1,17 @@
+<!-- Stock Trading Website -->
+
+<!-- Login page for registered users. -->
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Log Out
+{% endblock %}
+
+{% block main %}
+    <body>
+        <h1>You have been logged out</h1>
+        <p>Thank you for visiting. You have been successfully logged out of your account.</p>
+        <a href="{{ url_for('login') }}">Click here to log in again</a>
+    </body>
+{% endblock %}
