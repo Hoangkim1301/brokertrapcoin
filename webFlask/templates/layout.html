@@ -20,6 +20,12 @@
         <title>C$50 Finance: {% block title %}{% endblock %}</title>
         <!-- dau duc bun -->
         <link rel="icon" href="/static/icons/favicon.ico">
+
+        <script>
+            window.onbeforeunload = function() {
+                navigator.sendBeacon('/logout');
+            }
+        </script>
     </head>
 
     <body>        

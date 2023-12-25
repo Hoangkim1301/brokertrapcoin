@@ -58,7 +58,7 @@ def login():
     else:    
         return render_template("login.html")
 
-@app.route("/logout")
+@app.route("/logout",methods=['POST', 'GET'])
 def logout():
     # Forget any user_id
     session.clear()
@@ -68,7 +68,16 @@ def logout():
 @app.route("/dashboard")
 @login_required
 def dashboard():
+    #identify current user
+    user_id = session["user_id"]
+    
+    
     return render_template("dashboard.html")
+
+@app.route("/index")
+def index():
+    return render_template("index.html")
+
 
 # Lets a new user register to the site.
 @app.route("/register", methods=["GET", "POST"])
