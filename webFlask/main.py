@@ -87,7 +87,7 @@ def register():
 if __name__ == '__main__':
     '''
     CHECK DATABASE BLOCK
-    '''
+    
     #check if database is connected
     conn = create_connection(r"finance.db")
     query = r"""CREATE TABLE IF NOT EXISTS users (
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         print(row)   
     conn.commit()           
     conn.close()
-        
+    '''    
         
     '''
     RUN FLASK BLOCK

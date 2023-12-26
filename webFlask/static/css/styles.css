@@ -30,6 +30,9 @@ nav .navbar-brand .gray
     color: #808080;
 }
 
+.nav-link {
+    color: #537fbe;    /* Replace with your desired color code */
+}
 
 
 /* Forms. */
