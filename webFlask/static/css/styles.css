@@ -61,3 +61,81 @@ main img
     /* Constrain images on small screens. */
     max-width: 100%;
 }
+
+/* Quantity, Bought, Difference, Bot Strategy Boxes */
+.info-box-container {
+    display: flex; /* Use flexbox for horizontal alignment */
+    justify-content: space-around; /* Adjust as needed (space-between, flex-start, etc.) */
+    flex-wrap: wrap; /* Allow wrapping to multiple lines if needed */
+}
+
+.info-box {
+    flex: 1 1 200px; /* Set a specific width for each box */
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+.info-box h3 {
+    margin-top: 0;
+}
+
+/* Additional specific styles for Quantity, Bought, Difference, Bot Strategy if needed */
+/* Example: Quantity */
+.info-box.quantity {
+    /* Add specific styles for Quantity box if needed */
+}
+
+/* Example: Bought */
+.info-box.bought {
+    /* Add specific styles for Bought box if needed */
+}
+
+/* Example: Difference */
+.info-box.difference {
+    /* Add specific styles for Difference box if needed */
+}
+
+/* Example: Bot Strategy */
+.info-box.bot-strategy {
+    /* Add specific styles for Bot Strategy box if needed */
+}
+
+/* Styles for the dummy buttons */
+.dummy-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.dummy-button:hover {
+    background-color: #e0e0e0;
+}
+
+
+/* Styles for the Go Back button */
+.go-back-container {
+    text-align: center; /* Center the button horizontally */
+    margin-top: 20px; /* Adjust spacing from the boxes */
+}
+
+.go-back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    text-decoration: none;
+    color: #333;
+}
+
+.go-back-button:hover {
+    background-color: #e0e0e0;
+}

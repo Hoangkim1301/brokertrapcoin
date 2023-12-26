@@ -1,0 +1,95 @@
+<!-- Stock Trading Website -->
+
+<!-- Shows all of the currently logged in user's owned stocks and their information. -->
+
+{% extends "layout.html" %}
+
+{% block main %}
+    <body>
+        <!-- Go Back Button -->
+        <div class="go-back-container">
+            <a href="/dashboard" class="go-back-button">Back to Dashboard</a>
+        </div>
+
+        <h2>TESTING: TradingView</h2>
+        
+        <!-- Quantity, Bought, Difference, Bot Strategy Boxes Container -->
+        <div class="info-box-container">
+            <!-- Quantity -->
+            <div class="info-box">
+                <h3>Quantity</h3>
+                <p>Content related to Quantity goes here...</p>
+                <button class="dummy-button">Button</button>
+            </div>
+
+            <!-- Bought -->
+            <div class="info-box">
+                <h3>Bought</h3>
+                <p>Content related to Bought goes here...</p>
+                <button class="dummy-button">Button</button>
+            </div>
+
+            <!-- Difference -->
+            <div class="info-box">
+                <h3>Difference</h3>
+                <p>Content related to Difference goes here...</p>
+                <button class="dummy-button">Button</button>
+            </div>
+
+            <!-- Bot Strategy -->
+            <div class="info-box">
+                <h3>Bot Strategy</h3>
+                <p>Content related to Bot Strategy goes here...</p>
+                <button class="dummy-button" {% if botStrategyEnabled %}disabled{% endif %}>Enablle</button>
+                <button class="dummy-button">Diasable</button>
+            </div>
+        </div>
+
+
+        
+
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+            "width": "100%",
+            "height": "610",
+            "symbol": "NASDAQ:AAPL",
+            "interval": "D",
+            "timezone": "Europe/Berlin",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "enable_publishing": true,
+            "backgroundColor": "#131722",
+            "gridColor": "rgba(240, 243, 250, 0.06)",
+            "withdateranges": true,
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "watchlist": [
+                "NASDAQ:TSLA",
+                "NASDAQ:AAPL",
+                "NASDAQ:AMZN",
+                "NASDAQ:MSFT",
+                "NASDAQ:META",
+                "NASDAQ:AMD",
+                "NASDAQ:NFLX",
+                "NASDAQ:GOOG",
+                "XETR:SIE"
+            ],
+            "details": true,
+            "hotlist": true,
+            "calendar": true,
+            "show_popup_button": true,
+            "popup_width": "50%",
+            "popup_height": "300",
+            "support_host": "https://www.tradingview.com"
+        }
+            </script>
+        </div>
+        <!-- TradingView Widget END -->
+        
+    </body>
+{% endblock %}

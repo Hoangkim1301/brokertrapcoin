@@ -99,12 +99,14 @@ if __name__ == '__main__':
     conn = create_connection(r"finance.db")
     res = conn.execute("SELECT * FROM USERS WHERE username = 'a'")  
     #print out the result
+    conn.commit()
+    
+    print(res)
+
     for row in res:
         print('user', len(row)) 
         
-    print('check')    
-    conn.commit()           
-    conn.close()
+    conn.close()    
     
     
     

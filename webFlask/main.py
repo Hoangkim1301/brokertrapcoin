@@ -25,7 +25,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 @app.route('/')
-def hello_world():
+def main_page():
     return render_template('/layout.html')
 
 #connect to database
@@ -46,19 +46,20 @@ def login():
         
         #check if username exists
         user = db_conn.execute("SELECT * FROM USERS WHERE username = ?", (username,))
-        
+
         for row in user:  
-            if len(row) == 0 or (row[2] != password):
+            if len(row) == 0 or (row[1] != username) or(row[2] != password):
                 return apology("invalid username and/or password", 403)
             elif row[2] == password:
                 # Remember which user has logged in.
                 session["user_id"] = row[0]
+                # Redirect to dashboard
                 return dashboard()
-            
     else:    
         return render_template("login.html")
 
-@app.route("/logout",methods=['POST', 'GET'])
+@app.route("/logout")
+@login_required
 def logout():
     # Forget any user_id
     session.clear()
@@ -68,15 +69,28 @@ def logout():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    #identify current user
-    user_id = session["user_id"]
-    
-    
-    return render_template("dashboard.html")
+    # Identify the current user.
+    print("user_id", session.get("user_id"))
+    if session.get("user_id") == 'None':
+        #session.clear()
+        return redirect("/")
+    else:
+        user_id = session["user_id"]
+        print("dashboard user_id: ", user_id)
+        #identify current user_name
+        user_name = db_conn.execute("SELECT username FROM USERS WHERE id = ?", (session["user_id"],))
+        for row in user_name:  
+            name = row[0]
+            print('dashboard', name)    
+            redirect("/dashboard")
+            return render_template("dashboard.html",user_name = name)
+            #return redirect("/dashboard")
 
-@app.route("/index")
-def index():
-    return render_template("index.html")
+@app.route("/view")
+@login_required
+def view():
+    print("view user_id:", session.get("user_id"))
+    return render_template("view.html")
 
 
 # Lets a new user register to the site.
