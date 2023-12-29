@@ -43,14 +43,14 @@ def add(conn, query, data):
         print(e)
 
 def showDB(conn):
-    res = conn.execute("SELECT * FROM USERS")  
+    res = conn.execute("SELECT * FROM users")  
     for row in res:  
         print(row)   
     conn.commit()           
     conn.close()
     
 def clearDB(conn):
-    conn.execute("DELETE FROM USERS")
+    conn.execute("DELETE FROM users")
     conn.commit()
     print('Show database after clear:')
     showDB(conn)
@@ -58,36 +58,36 @@ def clearDB(conn):
     
 def testConnecDB():
     conn = create_connection(r"finance.db")
-    query = r"""CREATE TABLE IF NOT EXISTS users (
+    query = r"""CREATE TABLE IF NOT EXISTS ress (
                             id integer PRIMARY KEY,
-                            username text NOT NULL,
+                            resname text NOT NULL,
                             password text NOT NULL
                             );"""                   
     if conn is not None:
         create_table(conn, query)
     
-    res = conn.execute("SELECT * FROM USERS")  
+    res = conn.execute("SELECT * FROM users")  
     for row in res:  
         print(row)   
     conn.commit()           
     conn.close()
     
 def importDB(conn):
-    query = r"""CREATE TABLE IF NOT EXISTS users (
+    query = r"""CREATE TABLE IF NOT EXISTS ress (
                             id integer PRIMARY KEY,
-                            username text NOT NULL,
+                            resname text NOT NULL,
                             password text NOT NULL
                             );"""                   
     if conn is not None:
         create_table(conn, query)
     
-    query = r'''INSERT INTO users (id, username, password)
+    query = r'''INSERT INTO users (id, resname, password)
                 VALUES 
                 ('1','kimlonghoang','12345'),
                 ('2','hoanganhnguyen','12345'),
                 ('3','minhducpham','12345'),
                 ('4','phuongthaonguyen','12345');'''
-    res = conn.execute("SELECT * FROM USERS")  
+    res = conn.execute("SELECT * FROM users")  
     for row in res:  
         print(row)   
     conn.commit()           
@@ -95,17 +95,21 @@ def importDB(conn):
     
 #main
 if __name__ == '__main__':
-    
+    '''
+    TEST DATABASE BLOCK
+    '''
     conn = create_connection(r"finance.db")
-    res = conn.execute("SELECT * FROM USERS WHERE username = 'a'")  
+    res = conn.execute("SELECT * FROM users WHERE username = 'kimlonghoang'")  
     #print out the result
-    conn.commit()
     
-    print(res)
-
-    for row in res:
-        print('user', len(row)) 
+    res = res.fetchone()
+    
+    if res is None:
+        print('No res found')
+    else:
+        print('res', res[1])
         
+    conn.commit() 
     conn.close()    
     
     

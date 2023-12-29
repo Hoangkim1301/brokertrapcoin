@@ -12,15 +12,16 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
         <!-- CSS. -->
         <link href="/static/css/styles.css" rel="stylesheet">
-
+        
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
         <title>C$50 Finance: {% block title %}{% endblock %}</title>
-        <!-- dau duc bun -->
-        <link rel="icon" href="/static/icons/DB.png" type="image/png">
         
+        <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+        <link href="/static/icons/DB.ico"" rel="icon">
+
         <script>
             window.onbeforeunload = function() {
                 navigator.sendBeacon('/logout');
@@ -44,9 +45,9 @@
                         <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
                         <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
                         <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
-                        
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" >Version 0.0.1</a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                     </ul>
                 <!-- The user is logged out. -->
@@ -59,7 +60,6 @@
             </div>
         </nav>
 
-        
         <!-- flash message -->
         {% if get_flashed_messages() %}
             <header>
@@ -69,13 +69,20 @@
             </header>
         {% endif %}
 
-         <!-- Main content of each page -->
-         <main class="container p-5">
+        <!-- Main content of each page -->
+        <main class="container p-5">
             {% block main %}{% endblock %}
         </main>
+
+        <div class="time-container">
+            <p class="current-time">The current time is:</p>
+            <p class="current-time">{{ current_time }}</p>
+        </div>
+
         <!-- Footer. -->
         <footer class="small text-center text-muted">
             Brought to you by <a href="https://www.facebook.com/hotboy.huutinh.boytubi">BunCaKoi</a>
         </footer>
+
     </body>
 </html>

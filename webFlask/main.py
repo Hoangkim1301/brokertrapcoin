@@ -1,6 +1,7 @@
 import os
-
 import sqlite3
+
+from datetime import datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -20,7 +21,8 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure session to use filesystem (instead of signed cookies).
 app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_PERMANENT"] = False #session timeout after browser is closed
+#app.config['PERMANENT_SESSION_LIFETIME'] = 300 #session timeout in seconds
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
@@ -44,17 +46,20 @@ def login():
         elif username == '':
             return apology("must provide password", 403)
         
-        #check if username exists
+        # check if username exists
         user = db_conn.execute("SELECT * FROM USERS WHERE username = ?", (username,))
-
-        for row in user:  
-            if len(row) == 0 or (row[1] != username) or(row[2] != password):
-                return apology("invalid username and/or password", 403)
-            elif row[2] == password:
-                # Remember which user has logged in.
-                session["user_id"] = row[0]
-                # Redirect to dashboard
-                return dashboard()
+        # take the first row of the result
+        user = user.fetchone()
+        
+        if user is None:
+            return apology("invalid username", 403)
+        elif user[2] != password:
+            return apology("invalid password", 403)
+        elif user[2] == password:
+            # Remember which user has logged in.
+            session["user_id"] = user[0]
+            # Redirect to dashboard
+            return dashboard()
     else:    
         return render_template("login.html")
 
@@ -69,22 +74,44 @@ def logout():
 @app.route("/dashboard")
 @login_required
 def dashboard():
+    current_time = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
     # Identify the current user.
-    print("user_id", session.get("user_id"))
     if session.get("user_id") == 'None':
-        #session.clear()
+        session.clear()
         return redirect("/")
     else:
         user_id = session["user_id"]
         print("dashboard user_id: ", user_id)
         #identify current user_name
-        user_name = db_conn.execute("SELECT username FROM USERS WHERE id = ?", (session["user_id"],))
-        for row in user_name:  
-            name = row[0]
-            print('dashboard', name)    
-            redirect("/dashboard")
-            return render_template("dashboard.html",user_name = name)
-            #return redirect("/dashboard")
+        user = db_conn.execute("SELECT * FROM USERS WHERE id = ?", (session["user_id"],))
+        user = user.fetchone()
+           
+           
+        # Create a list of stock's information
+        stock_info_list = []
+        # Initialize variales here for correct scope
+        symbol = ''
+        name = ''
+        shares = 0
+        price = 0
+        share_sum = 0
+        # Create an array of stocks
+        
+        
+        #redirect("/dashboard")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return render_template("dashboard.html",user_name = user[1], current_time = current_time)
+            
 
 @app.route("/view")
 @login_required
@@ -96,6 +123,31 @@ def view():
 # Lets a new user register to the site.
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    # user reached route visa Poste (as by submmiting a form via POST)
+    # User create an account with username and password
+    if request.method == 'POST':
+        # Query database for username to see if it already exists
+        user_check = db_conn.execute("SELECT * FROM USERS WHERE username = ?", (request.form.get('username'),))
+        user_check = user_check.fetchone()
+        if user_check is not None:
+            return apology("username already exists", 403)
+        if request.form.get('password') == '':
+            return apology("must provide password", 403)
+        if request.form.get('password') != request.form.get('confirmation'):
+            return apology("passwords do not match", 403)
+        else:
+            #Assign username to a new variable
+            username = request.form.get('username')
+            #Assign password to a new variable
+            password = request.form.get('password')
+            if True:
+                db_conn.execute('INSERT INTO USERS (username, password) VALUES (?, ?)', (username, password))
+                db_conn.commit()
+                # Render a confirm that account is created
+                flash('Account successfully created!', 'success')
+                # Redirect user to login page
+                return redirect("/login")
+    
     return render_template("register.html")
 
 if __name__ == '__main__':

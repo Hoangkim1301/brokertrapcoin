@@ -69,6 +69,20 @@ main img
     flex-wrap: wrap; /* Allow wrapping to multiple lines if needed */
 }
 
+/* CSS to position the time in the top right corner */
+.time-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px; /* Optional padding */
+    border: 1px solid #ccc; /* Optional border */
+}
+
+.current-time {
+    /* Additional styling if needed */
+}
+
+
 .info-box {
     flex: 1 1 200px; /* Set a specific width for each box */
     border: 1px solid #ccc;
@@ -122,8 +136,8 @@ main img
 
 /* Styles for the Go Back button */
 .go-back-container {
-    text-align: center; /* Center the button horizontally */
-    margin-top: 20px; /* Adjust spacing from the boxes */
+    text-align: left; /* Center the button horizontally */
+    margin-top: 0px; /* Adjust spacing from the boxes */
 }
 
 .go-back-button {

@@ -8,38 +8,52 @@
     <body>
         <!-- Go Back Button -->
         <div class="go-back-container">
-            <a href="/dashboard" class="go-back-button">Back to Dashboard</a>
+            <a href="/dashboard" class="go-back-button"> ← Back to Dashboard</a>
         </div>
 
         <h2>TESTING: TradingView</h2>
-        
+
+        <div class="info-box">
+            <!-- Amount of Money -->
+            <p>Amount of Money: ${{ amount_of_money }}</p>
+
+            <!-- Number of Stocks Owned -->
+            <p>Number of Stocks Owned: {{ number_of_stocks }}</p>
+
+            <!-- Difference Since Buy -->
+            <p>Difference Since Buy: ${{ difference_since_buy }}</p>
+        </div>
+
+        <!-- Money Histogram Container -->
+        <div id="moneyHistogram">{{ histogram_div|safe }}</div>
+
         <!-- Quantity, Bought, Difference, Bot Strategy Boxes Container -->
         <div class="info-box-container">
             <!-- Quantity -->
             <div class="info-box">
-                <h3>Quantity</h3>
-                <p>Content related to Quantity goes here...</p>
+                <h3>Stocks & ETFs</h3>
+                <p>How many stock you are having now</p>
                 <button class="dummy-button">Button</button>
             </div>
 
             <!-- Bought -->
             <div class="info-box">
-                <h3>Bought</h3>
-                <p>Content related to Bought goes here...</p>
+                <h3>Wealth</h3>
+                <p>Your current Money</p>
                 <button class="dummy-button">Button</button>
             </div>
 
             <!-- Difference -->
             <div class="info-box">
                 <h3>Difference</h3>
-                <p>Content related to Difference goes here...</p>
+                <p>€ since buy absolute</p>
                 <button class="dummy-button">Button</button>
             </div>
 
             <!-- Bot Strategy -->
             <div class="info-box">
                 <h3>Bot Strategy</h3>
-                <p>Content related to Bot Strategy goes here...</p>
+                <p>The bot start trading</p>
                 <button class="dummy-button" {% if botStrategyEnabled %}disabled{% endif %}>Enablle</button>
                 <button class="dummy-button">Diasable</button>
             </div>

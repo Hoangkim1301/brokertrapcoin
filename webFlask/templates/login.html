@@ -9,6 +9,19 @@
 {% endblock %}
 
 {% block main %}
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-success">
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    {% endwith %}
+    
     <form action="/login" method="post">
         <div style="display: flex; justify-content: center;">
             <img src="/static/images/Ducbunluaga.jpg" alt="Duc Bun Lua Ga" style="width: 500px; height: auto;">
@@ -26,6 +39,8 @@
         <button class="btn btn-primary" type="submit">Log In</button>
     </form>
     <p>Don't have an account? <a href="/register">Register</a></p>
+
+    
     
 {% endblock %}
     
