@@ -71,14 +71,18 @@
 
         <!-- Main content of each page -->
         <main class="container p-5">
-            {% block main %}{% endblock %}
+            {% block main %}
+                {% if request.path == '/dashboard' %}
+                    <div class="time-container">
+                        <p class="current-time">The current time is:</p>
+                        <p class="current-time">{{ current_time }}</p>
+                    </div>
+                {% endif %}
+        <!-- Other content for the dashboard page -->
+            {% endblock %}
         </main>
 
-        <div class="time-container">
-            <p class="current-time">The current time is:</p>
-            <p class="current-time">{{ current_time }}</p>
-        </div>
-
+        
         <!-- Footer. -->
         <footer class="small text-center text-muted">
             Brought to you by <a href="https://www.facebook.com/hotboy.huutinh.boytubi">BunCaKoi</a>

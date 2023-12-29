@@ -99,15 +99,8 @@ if __name__ == '__main__':
     TEST DATABASE BLOCK
     '''
     conn = create_connection(r"finance.db")
-    res = conn.execute("SELECT * FROM users WHERE username = 'kimlonghoang'")  
-    #print out the result
     
-    res = res.fetchone()
-    
-    if res is None:
-        print('No res found')
-    else:
-        print('res', res[1])
+    add(conn, "CREATE TABLE IF NOT EXISTS stocks (user_id integer NOT NULL, symbol STRING, shares INTEGER, price DOUBLE, transaction INTEGER, name STRING;", ())
         
     conn.commit() 
     conn.close()    

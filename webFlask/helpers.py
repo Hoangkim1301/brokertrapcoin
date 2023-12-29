@@ -9,6 +9,9 @@ import urllib.parse
 from flask import redirect, render_template, request, session
 from functools import wraps
 
+api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
+
+
 # Render message as an apology to user.
 def apology(message, code=400):
     def escape(s):
@@ -34,25 +37,40 @@ def login_required(f):
 
 # Look up quote for symbol.
 def lookup(symbol):
+    api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
     # Contact API.
     try:
-        api_key = os.environ.get("API_KEY")
-        response = requests.get(f"https://cloud-sse.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token={api_key}")
-        response.raise_for_status()
+        #response = requests.get(f"https://cloud-sse.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token={api_key}")
+        #response.raise_for_status()       
+        endpoint = f'https://cloud.iexapis.com/stable/stock/{symbol}/quote?token={api_key}'
+        
+        # Sending a GET request to the endpoint
+        response = requests.get(endpoint)
+
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            stock_data = response.json()
+            stock_info = {
+                'name': stock_data.get('companyName'),
+                'symbol': stock_data.get('symbol'),
+                'latest_price': stock_data.get('latestPrice')
+            }
+            return stock_info
     except requests.RequestException:
         return None
-    # Parse response.
-    try:
-        quote = response.json()
-        return {
-            "name": quote["companyName"],
-            "price": float(quote["latestPrice"]),
-            "symbol": quote["symbol"]
-        }
     except (KeyError, TypeError, ValueError):
         return None
 
 
 # Format value as USD.
 def usd(value):
-    return f"${value:,.2f}"
+    return ("value: ", value)
+
+def usd_to_euro(value):
+    #calculate euro value
+    value = value * 0.85
+    return f"€{value:,.2f}"
+
+#main
+if __name__ == '__main__':
+    lookup('AAPL')

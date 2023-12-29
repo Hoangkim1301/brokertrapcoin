@@ -26,6 +26,10 @@ app.config["SESSION_PERMANENT"] = False #session timeout after browser is closed
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# Make sure API key is set.
+#if not os.environ.get("API_KEY"):
+#    raise RuntimeError("API_KEY not set")
+
 @app.route('/')
 def main_page():
     return render_template('/layout.html')
@@ -81,36 +85,61 @@ def dashboard():
         return redirect("/")
     else:
         user_id = session["user_id"]
-        print("dashboard user_id: ", user_id)
         #identify current user_name
-        user = db_conn.execute("SELECT * FROM USERS WHERE id = ?", (session["user_id"],))
-        user = user.fetchone()
-           
+        user_name = db_conn.execute("SELECT username FROM users WHERE id = ?", (user_id,)).fetchone()[0]
+        stock_list = db_conn.execute("SELECT DISTINCT symbol FROM stocks WHERE user_id = ?", (user_id,))
+        user_stock = [row[0] for row in stock_list.fetchall()]
            
         # Create a list of stock's information
         stock_info_list = []
         # Initialize variales here for correct scope
-        symbol = ''
-        name = ''
-        shares = 0
-        price = 0
-        share_sum = 0
-        # Create an array of stocks
+        stock_name = ''
+        # Create an array of stocks which we already added to the list, prevent duplicates
+        stocks_seen = []
+        # A list of stock_attributes to be passed to dashboard.html
+        all_stocks = []
+        # A sum of all the share totals at their current stock price
+        share_total = 0
+        print("user_stock: ", user_stock)
+        for row in user_stock:
+            # Get stock's name
+            stock_symbol = row # symbol
+            # Parse the stock information into list
+            if stock_symbol in stocks_seen:
+                continue
+            else:
+                # Get stock information from IEX
+                stock_info = lookup(stock_symbol)
+                # Clear stock_info_list 
+                stock_info_list.clear()
+                # Parse the stock infos to the list
+                for value in stock_info.values():
+                    stock_info_list.append(value)
+                # Give each index thier appropriate stock information declaration
+                stock_name = stock_info_list[0]
+                # Get the number of shares for the stock in this loop ( which are belongs to current users ) from stocks table
+                # Then add them to get the total number of shares for the stocks
+                shares_sum = db_conn.execute("SELECT SUM(shares) FROM stocks WHERE symbol = ? AND user_id = ?", (stock_symbol, user_id)).fetchone()[0] 
+                print("shares_sum: ", shares_sum)
+                # If we have more or equals 1 share of this stock ()
         
-        
-        #redirect("/dashboard")
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        return render_template("dashboard.html",user_name = user[1], current_time = current_time)
+                if shares_sum >= 1:
+                    # Add this stock's shares_total to the shares_total_sum to be used in the grand_total calculation.
+                    share_total += shares_sum
+                    # Calculate total price of each stock.
+                    total_price = shares_sum * stock_info.get('latest_price')
+                    # Consolidate attributes of this stock to an array.
+                    stock_attributes = [stock_symbol, stock_name, shares_sum, stock_info.get('latest_price'),'100%',total_price]
+                    # Add this attribute array to the all_stocks array.
+                    all_stocks.append(stock_attributes)
+                    # Add this stock to the stocks_seen array to prevent duplicates.
+                    stocks_seen.append(stock_symbol)
+
+        stocks_seen.clear()
+        return render_template("dashboard.html",all_stocks = all_stocks,
+                                                share_total_sum = share_total,
+                                                user_name = user_name, 
+                                                current_time = current_time)
             
 
 @app.route("/view")
