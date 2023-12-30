@@ -8,7 +8,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required, lookup_iex_api, usd, lookup_yfinance
 
 # Importing from a sibling directory
 import sys
@@ -27,8 +27,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Make sure API key is set.
-#if not os.environ.get("API_KEY"):
-#    raise RuntimeError("API_KEY not set")
+if not os.environ.get("API_KEY"):
+    raise RuntimeError("API_KEY not set")
 
 @app.route('/')
 def main_page():
@@ -100,6 +100,8 @@ def dashboard():
         all_stocks = []
         # A sum of all the share totals at their current stock price
         share_total = 0
+        final_cash = 0
+        
         print("user_stock: ", user_stock)
         for row in user_stock:
             # Get stock's name
@@ -109,7 +111,8 @@ def dashboard():
                 continue
             else:
                 # Get stock information from IEX
-                stock_info = lookup(stock_symbol)
+                #stock_info = lookup_iex_api(stock_symbol)
+                stock_info = lookup_yfinance(stock_symbol)
                 # Clear stock_info_list 
                 stock_info_list.clear()
                 # Parse the stock infos to the list
@@ -126,10 +129,14 @@ def dashboard():
                 if shares_sum >= 1:
                     # Add this stock's shares_total to the shares_total_sum to be used in the grand_total calculation.
                     share_total += shares_sum
+                    # Calculate price at bought time.
+                    bought = db_conn.execute("SELECT SUM(total_price) FROM stocks WHERE symbol = ? AND user_id = ?", (stock_symbol, user_id)).fetchone()[0]
                     # Calculate total price of each stock.
                     total_price = shares_sum * stock_info.get('latest_price')
+                    # Calculate final cash
+                    final_cash += total_price
                     # Consolidate attributes of this stock to an array.
-                    stock_attributes = [stock_symbol, stock_name, shares_sum, stock_info.get('latest_price'),'100%',total_price]
+                    stock_attributes = [stock_symbol, stock_name, shares_sum, bought, stock_info.get('latest_price'),'100%',total_price]
                     # Add this attribute array to the all_stocks array.
                     all_stocks.append(stock_attributes)
                     # Add this stock to the stocks_seen array to prevent duplicates.
@@ -138,6 +145,7 @@ def dashboard():
         stocks_seen.clear()
         return render_template("dashboard.html",all_stocks = all_stocks,
                                                 share_total_sum = share_total,
+                                                final_cash = final_cash,
                                                 user_name = user_name, 
                                                 current_time = current_time)
             

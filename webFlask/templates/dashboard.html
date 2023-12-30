@@ -20,6 +20,7 @@
           <th scope="col">Symbol</th>
           <th scope="col">Name</th>
           <th scope="col">Shares</th>
+          <th scope="col">Bought</th>
           <th scope="col">Price</th>
           <th scope="col">Performance</th>
           <th scope="col">TOTAL($)</th>
@@ -35,6 +36,7 @@
               <td>{{ stock[3] }}</td>
               <td>{{ stock[4] }}</td>
               <td>{{ stock[5] }}</td>
+              <td>{{ stock[6] }}</td>
           </tr>
         {% endfor %}
         <tr>
@@ -43,9 +45,11 @@
             <td>{{ share_total_sum }}</td>
             <td></td>
             <td></td>
+            <td></td>
             <td>{{ final_cash }}</td>
         </tr>
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

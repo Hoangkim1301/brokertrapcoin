@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 def real_time_price(stock_code):
     # Calculate the start date as one month ago from today
-    start_date = datetime.now() - timedelta(days=93)
+    start_date = datetime.now() - timedelta(days=7)
     start_date = start_date.strftime('%Y-%m-%d')
     end_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
@@ -16,13 +16,14 @@ def real_time_price(stock_code):
         
         data = yf.download(tickers=stock_code, start=start_date, end=end_date, interval='1d', auto_adjust=True)
         print('data:', stock_code)
-        print(data)
+        #print(data)
     
     except Exception as e:
         print(f'Failed to fetch data {e}')
         return None
     # Get the latest price
     price = data['Close'].iloc[-1]
+    return round(price,2)
     
 def create_price_chart(symbol,df):
     light_palette = {}
@@ -61,6 +62,7 @@ if __name__ == '__main__':
     # Iterate over the stock list
     for stock_code in stock_list_data:
         price = real_time_price(stock_code)
+        print('price:', price)
     
     
     

@@ -1,7 +1,9 @@
 class StockList:
     def __init__(self):
-        self.stocks = ['AAPL', 'MSFT', 'GOOG', 'AMZN', 'META', 'TSLA','NVDA','SIE.DE','TSM','AMD']
+        #self.stocks = ['AAPL', 'MSFT', 'GOOG', 'AMZN', 'META', 'TSLA','NVDA','SIE.DE','TSM','AMD']
+        self.stocks = ['AAPL', 'MSFT', 'AMZN']
 
+        
     def add_stock(self, stock):
         if stock not in self.stocks:
             self.stocks.append(stock)

@@ -118,6 +118,32 @@ main img
     /* Add specific styles for Bot Strategy box if needed */
 }
 
+.loginbutton {
+    display: inline-block;
+    line-height: 33px;
+    height: 36px;
+    padding: 0 13px 0 12px;
+    background-color: #FFF;
+    color: #1274ED;
+    border: 1px solid #1274ED;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 100px;
+}
+
+.registerbutton {
+    display: inline-block;
+    line-height: 33px;
+    height: 36px;
+    padding: 0 13px 0 12px;
+    background-color: #1274ED;
+    border: 1px solid #1274ED;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 100px;
+}
+
 /* Styles for the dummy buttons */
 .dummy-button {
     display: inline-block;

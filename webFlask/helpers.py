@@ -6,8 +6,10 @@ import os
 import requests
 import urllib.parse
 
+import yfinance as yf
 from flask import redirect, render_template, request, session
 from functools import wraps
+from datetime import datetime, timedelta
 
 #api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
 
@@ -36,8 +38,8 @@ def login_required(f):
 
 
 # Look up quote for symbol.
-def lookup(symbol):
-    api_key = ''
+def lookup_iex_api(symbol):
+    api_key = os.environ.get("API_KEY")
     # Contact API.
     try:
         #response = requests.get(f"https://cloud-sse.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token={api_key}")
@@ -61,6 +63,48 @@ def lookup(symbol):
     except (KeyError, TypeError, ValueError):
         return None
 
+def lookup_yfinance(stock_code):
+    try:
+        # Get today's date for end_date and one day ago for start_date
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+
+        data = yf.download(tickers=stock_code, start=start_date, end=end_date, interval='1d', auto_adjust=True)
+        price = data['Close'].iloc[-1]  # Get the latest price at the last minute
+
+        # Fetch the company's info to get the full name
+        ticker = yf.Ticker(stock_code)
+        company_info = ticker.info
+        full_name = company_info['longName'] if 'longName' in company_info else stock_code
+
+        stock_info = {
+            'name': full_name,
+            'symbol': stock_code,
+            'latest_price': round(price, 2)
+        }
+        
+        return stock_info
+
+    except Exception as e:
+        print(f'Failed to fetch data: {e}')
+        return None
+
+def bought_calc(stock_symbol, user_id,db_conn):
+    # Get the number of shares for the stock in this loop ( which are belongs to current users ) from stocks table
+    # Then add them to get the total number of shares for the stocks
+    shares_sum = db_conn.execute("SELECT SUM(shares) FROM stocks WHERE symbol = ? AND user_id = ?", (stock_symbol, user_id)).fetchone()[0] 
+    print("shares_sum: ", shares_sum)
+    # If we have more or equals 1 share of this stock ()
+    if shares_sum >= 1:
+        # Get the total price of this stock
+        total_price = db_conn.execute("SELECT SUM(price) FROM stocks WHERE symbol = ? AND user_id = ?", (stock_symbol, user_id)).fetchone()[0]
+        # Calculate the average price of this stock
+        bought = total_price / shares_sum
+        # Round the average price to 2 decimal places
+        bought = round(bought,2)
+        return bought
+    else:
+        return None
 
 # Format value as USD.
 def usd(value):
@@ -73,4 +117,4 @@ def usd_to_euro(value):
 
 #main
 if __name__ == '__main__':
-    lookup('AAPL')
+    lookup_iex_api('AAPL')

@@ -20,8 +20,8 @@
         <title>C$50 Finance: {% block title %}{% endblock %}</title>
         
         <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
-        <link href="/static/icons/DB.ico"" rel="icon">
-
+        <!-- <link href="/static/icons/DB.ico" rel="icon" -->
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/DB.ico">
         <script>
             window.onbeforeunload = function() {
                 navigator.sendBeacon('/logout');
@@ -53,8 +53,8 @@
                 <!-- The user is logged out. -->
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        <li class="nav-item"><a class="registerbutton" href="/register">Register</a></li>
+                        <li class="nav-item"><a class="loginbutton" href="/login">Log In</a></li>
                     </ul>
                 {% endif %}
             </div>

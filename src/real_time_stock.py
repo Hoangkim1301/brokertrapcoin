@@ -2,7 +2,7 @@ import requests
 import json
 
 # Replace 'YOUR_API_KEY' with your actual IEX Cloud API key
-api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
+#api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
 
 # List of stock symbols you want to fetch data for
 stock_symbols = ['AAPL', 'MSFT', 'GOOG', 'AMZN', 'META', 'TSLA','NVDA','SIE','TSM','AMD']
