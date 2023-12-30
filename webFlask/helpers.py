@@ -9,7 +9,7 @@ import urllib.parse
 from flask import redirect, render_template, request, session
 from functools import wraps
 
-api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
+#api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
 
 
 # Render message as an apology to user.
@@ -37,7 +37,7 @@ def login_required(f):
 
 # Look up quote for symbol.
 def lookup(symbol):
-    api_key = 'pk_c5d6f2b09e8a40fcb45ae5a0f58fcbb6'
+    api_key = ''
     # Contact API.
     try:
         #response = requests.get(f"https://cloud-sse.iexapis.com/stable/stock/{urllib.parse.quote_plus(symbol)}/quote?token={api_key}")

@@ -27,6 +27,7 @@ SELECT DISTINCT symbol FROM stocks WHERE user_id = 1;
 
 
 select * from stocks
+select * from stocks where user_id = 1
 
 
 SELECT SUM(shares) FROM stocks WHERE symbol = 'AAPL' AND user_id = 1
