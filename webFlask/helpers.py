@@ -65,9 +65,11 @@ def lookup_iex_api(symbol):
 
 def lookup_yfinance(stock_code):
     try:
-        # Get today's date for end_date and one day ago for start_date
-        end_date = datetime.now().strftime('%Y-%m-%d')
-        start_date = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+        # Calculate the start date as one month ago from today
+        start_date = datetime.now() - timedelta(days=7)
+        start_date = start_date.strftime('%Y-%m-%d')
+        end_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
+
 
         data = yf.download(tickers=stock_code, start=start_date, end=end_date, interval='1d', auto_adjust=True)
         price = data['Close'].iloc[-1]  # Get the latest price at the last minute
@@ -117,4 +119,5 @@ def usd_to_euro(value):
 
 #main
 if __name__ == '__main__':
-    lookup_iex_api('AAPL')
+    price = lookup_yfinance('AAPL')
+    print('price:', price)

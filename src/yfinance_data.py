@@ -60,11 +60,12 @@ if __name__ == '__main__':
     #st.title('Real time stock prices')
 
     # Iterate over the stock list
-    for stock_code in stock_list_data:
-        price = real_time_price(stock_code)
-        print('price:', price)
+    #for stock_code in stock_list_data:
+    #    price = real_time_price(stock_code)
+    #    print('price:', price)
     
-    
+    price = real_time_price('AAPL')
+    print('price:', price)
     
         
    

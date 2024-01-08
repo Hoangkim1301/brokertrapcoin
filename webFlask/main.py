@@ -116,6 +116,7 @@ def dashboard():
                 # Clear stock_info_list 
                 stock_info_list.clear()
                 # Parse the stock infos to the list
+                print("stock_info: ", stock_info)
                 for value in stock_info.values():
                     stock_info_list.append(value)
                 # Give each index thier appropriate stock information declaration
