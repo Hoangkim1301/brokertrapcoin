@@ -157,6 +157,44 @@ def view():
     print("view user_id:", session.get("user_id"))
     return render_template("view.html")
 
+@app.route("/quote", methods=["GET", "POST"])
+@login_required
+def quote():
+    return render_template("quote.html")
+
+@app.route("/buy", methods=["GET", "POST"])
+@login_required
+def buy():
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == 'GET':
+        return render_template("buy.html")
+    
+    # User reached route via POST (as by submitting a form via POST)
+    else:
+        # Get symbol from user input
+        symbol = request.form.get('symbol')
+        # Get shares from user input
+        shares = request.form.get('shares')
+        # Lookup for real time stock information via helpers.py
+        stock_info = lookup_yfinance(symbol)
+        #if the user entered nothing or stock_info is none
+        if not symbol or stock_info is None:
+            return apology("stock symbol not entered or stock symbol does not exist!", 403)
+        # if the user entered nothing or a negative number of shares
+        if not shares or int(shares) < 0:
+            return apology("share amount was not entered or entry was less than 1.", 403)
+        print("stock_info: ", stock_info)
+    
+@app.route("/sell", methods=["GET", "POST"])
+@login_required
+def sell():
+    return render_template("sell.html")
+
+@app.route("/news")
+@login_required
+def news():
+    return render_template("news.html")
+
 
 # Lets a new user register to the site.
 @app.route("/register", methods=["GET", "POST"])
