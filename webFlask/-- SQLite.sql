@@ -11,6 +11,15 @@ CREATE TABLE IF NOT EXISTS stocks (
     total_price REAL
 );
 
+CREATE TABLE IF NOT EXISTS money (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    cash REAL
+);
+
+INSERT INTO money (username, cash) VALUES ('minhducpham', 50000.0);
+
+
 
 --insert into stocks (user_id, symbol, shares, price, buy_date, name) values (1, 'AAPL', 10, 100.00, 123456789, 'Apple Inc.');
 INSERT INTO stocks (user_id, symbol, shares, price, buy_date, name, total_price) VALUES 
@@ -42,6 +51,7 @@ DELETE FROM stocks WHERE user_id = 3;
 
 select * from stocks
 SELECT * from users
+SELECT * from money
 select * from stocks where user_id = 1
 
 

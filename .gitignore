@@ -1,6 +1,9 @@
 # Ignore files with .log extension
 *.log
 
+# ignore ini files
+.ini
+
 # Ignore directory named 'temp'
 /temp/
 

@@ -18,7 +18,7 @@ To ensure a consistent development environment, we use a virtual environment. Fo
     cd brokertrapcoin
     ```
 
-2. Create a virtual environment (replace `<name_of_environment>` with your preferred name, ex: "myenv"):
+2. Create a virtual environment (replace `<name_of_environment>` with your preferred name, ex: "env"):
 - To avoid packages or dependencies be installed globally, please use virtual environment:
     ```bash
     python -m venv <name_of_environment>
@@ -46,7 +46,7 @@ Once the virtual environment is activated, install the project dependencies usin
 pip install -r requirements.txt
 ```
 
-### Installing Django (inside of venv)
+### Installing Django (inside of venv) !!! At the moment plese skip Django and continue with Flask
 
 Django is a high-level Python web framework that enables rapid development of secure and maintainable websites. To install Django in your virtual environment, follow these steps:
 

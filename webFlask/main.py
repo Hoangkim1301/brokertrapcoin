@@ -1,5 +1,7 @@
 import os
 import sqlite3
+import openai
+import requests
 
 from datetime import datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -144,10 +146,12 @@ def dashboard():
                     stocks_seen.append(stock_symbol)
 
         stocks_seen.clear()
+        total_cash = db_conn.execute("SELECT cash FROM money WHERE username = ?", (user_name,)).fetchone()[0]
         return render_template("dashboard.html",all_stocks = all_stocks,
                                                 share_total_sum = share_total,
                                                 final_cash = final_cash,
-                                                user_name = user_name, 
+                                                user_name = user_name,
+                                                total_cash = total_cash, 
                                                 current_time = current_time)
             
 
@@ -190,9 +194,21 @@ def buy():
 def sell():
     return render_template("sell.html")
 
-@app.route("/news")
+@app.route("/news", methods=["GET", "POST"])
 @login_required
 def news():
+    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+    NEWSCATCHER_API = os.environ.get("NEWSCATCHER_API")
+    # Get symbol from user input
+    symbol = request.form.get('symbol')
+    #
+    sentiments = []
+    openai.api_key = OPENAI_API_KEY
+    system_require_message = 'You will work as a Sentiment Analysis for Financial news. I will share news headline and summary. You will only answer as:\n\n BEARISH,BULLISH,NEUTRAL. No further explanation. \n Got it?'
+    message_history = []
+    message_history.append({'content':system_require_message,'role':'user'})
+    response = chat(message_history)
+    articles = fetch_news(symbol)
     return render_template("news.html")
 
 
@@ -229,7 +245,10 @@ def register():
 @app.route("/history")
 @login_required
 def history():
-    return render_template("history.html")
+    user_id = session["user_id"]
+    history = db_conn.execute("SELECT symbol,shares,price,buy_date FROM stocks WHERE user_id = ?", (user_id,))
+    history_list = history.fetchall()
+    return render_template("history.html",history_list = history_list)
 
 if __name__ == '__main__':
     '''
