@@ -13,9 +13,6 @@ config.ini
 # Ignore all .txt files in the root directory
 
 
-# Ignore all .pdf files recursively in all directories
-*.pdf
-
 #ignore settings.json
 .vscode/settings.json
 
